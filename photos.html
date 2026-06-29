@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Media Unit - SRI SUMANGALA NATIONAL SCHOOL</title>
+    <title>SRI SUMANGALA NATIONAL SCHOOL</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
 
@@ -131,7 +131,7 @@
             margin-top: 60px; 
         }
 
-        /* [លොකුවන ෆොටෝ Popup Modal ස්ටයිල්] */
+        /* [ලොකුවන ෆොටෝ Popup Modal ස්ටයිල්] */
         .custom-image-modal {
             display: none;
             position: fixed;
@@ -182,7 +182,6 @@
             width: 100%;
         }
 
-        /* 🆕➕ [අලුතෙන් එකතු කල CSS: වමට/දකුණට යන බටන් වල ස්ටයිල්] */
         .modal-nav-button {
             position: absolute;
             top: 50%;
@@ -209,7 +208,6 @@
         .prev-button { left: 40px; }
         .next-button { right: 40px; }
 
-        /* මොබයිල් ෆෝන් වලට බටන් පොඩි කිරීම */
         @media (max-width: 768px) {
             .prev-button { left: 15px; }
             .next-button { right: 15px; }
@@ -230,8 +228,7 @@
     </header>
 
     <nav>
- <a href="index.html">HOME</a>
-        <a href="photos.html" class="active">PHOTOS</a>
+       <a href="photos.html" class="active">PHOTOS</a>
         <a href="videos.html">VIDEOS</a>
         <a href="about.html">ABOUT</a>
         <a href="live.html">LIVE</a>
@@ -259,40 +256,70 @@
     </div>
 
     <script>
-        const myImages = [
-            { file: "main-photo.jpg", title: "Sports Meet 2026", desc: "නිවාසාන්තර ක්‍රීඩා උත්සවයේ සමූහ ඡායාරූපය." },
-            { file: "gallery1.jpg", title: "Media Workshop", desc: "නවක සාමාජිකයින් දැනුවත් කිරීමේ වැඩමුළුව." },
-            { file: "gallery2.jpg", title: "Announcing Panel", desc: "නිවේදන කටයුතු මෙහෙයවූ නිවේදක මණ්ඩලය." },
-            { file: "gallery3.jpg", title: "Photography Team", desc: "උත්සවය කැමරාකරණයෙන් හැඩකල අපේ කණ්ඩායම." }
+        /* [භාවිතා කරන ආකාරය]:
+          - cover: පිටත ගැලරියේ කාඩ් එකට පෙනෙන ප්‍රධාන ෆොටෝ එක.
+          - title: ඇල්බමයේ මාතෘකාව.
+          - desc: ඇල්බමය ගැන කෙටි විස්තරය.
+          - albumPhotos: 🆕 මේ ඇල්බමයට විතරක් අයිති ෆොටෝස් වල නම් (ලැයිස්තුවක් ලෙස).
+        */
+        const myAlbums = [
+            { 
+                cover: "main-photo.jpg", 
+                title: "Sports Meet 2026", 
+                desc: "නිවාසාන්තර ක්‍රීඩා උත්සවයේ සමූහ ඡායාරූපය.",
+                albumPhotos: ["main-photo.jpg", "sports1.jpg", "sports2.jpg", "sports3.jpg"] // 👈 Sports Meet එකේ ෆොටෝස් විතරක් මෙතනට දාන්න!
+            },
+            { 
+                cover: "gallery1.jpg", 
+                title: "Media Workshop", 
+                desc: "නවක සාමාජිකයින් දැනුවත් කිරීමේ වැඩමුළුව.",
+                albumPhotos: ["gallery1(2).jpg", "gallery1.jpg", "workshop2.jpg"] // 👈 Workshop එකේ ෆොටෝස් විතරක් මෙතනට දාන්න!
+            },
+            { 
+                cover: "gallery2.jpg", 
+                title: "Announcing Panel", 
+                desc: "නිවේදන කටයුතු මෙහෙයවූ නිවේදක මණ්ඩලය.",
+                albumPhotos: ["gallery2.jpg", "announce1.jpg"] 
+            },
+            { 
+                cover: "gallery3.jpg", 
+                title: "Photography Team", 
+                desc: "උත්සවය කැමරාකරණයෙන් හැඩකල අපේ කණ්ඩායම.",
+                albumPhotos: ["gallery3.jpg", "photo_team1.jpg"] 
+            }
         ];
 
-        // දැනට විවෘතව පවතින ෆොටෝ එකේ අංකය (Index) මතක තබා ගැනීමට
-        let currentImageIndex = 0;
+        // දැනට විවෘතව පවතින ඇල්බමය සහ එහි ඇති ෆොටෝ එකේ අංකය මතක තබා ගැනීමට විචල්‍යයන්
+        let currentAlbumIndex = 0;
+        let currentPhotoIndex = 0;
 
-        // ලැයිස්තුව කියවා HTML slots සාදන ක්‍රියාවලිය
+        // ලැයිස්තුව කියවා HTML Album Slots සාදන ක්‍රියාවලිය
         const galleryContainer = document.getElementById('photo-gallery-container');
         
-        myImages.forEach((img, index) => {
+        myAlbums.forEach((album, index) => {
             const cardHTML = `
                 <div class="photo-card">
                     <div class="photo-wrapper">
-                        <img src="images/${img.file}" alt="${img.title}" onclick="openModal(${index})" style="cursor: pointer;">
+                        <img src="images/${album.cover}" alt="${album.title}" onclick="openAlbum(${index})" style="cursor: pointer;">
                     </div>
                     <div class="photo-info">
-                        <h3>${img.title}</h3>
-                        <p>${img.desc}</p>
+                        <h3>${album.title}</h3>
+                        <p>${album.desc}</p>
                     </div>
                 </div>
             `;
             galleryContainer.innerHTML += cardHTML;
         });
 
-        // 🆕 [යාවත්කාලීන කල JavaScript Functions: ඇල්බම් එකක් මෙන් ක්‍රියා කිරීම]
-        function openModal(index) {
-            currentImageIndex = index;
+        // ඇල්බමයක් විවෘත කිරීම
+        function openAlbum(albumIndex) {
+            currentAlbumIndex = albumIndex;
+            currentPhotoIndex = 0; // සැමවිටම ඇල්බමයේ පළමු ෆොටෝ එකෙන් පටන් ගනී
+            
             const modal = document.getElementById('imagePopupModal');
             modal.style.display = "flex";
             setTimeout(() => { modal.classList.add('show'); }, 10);
+            
             updateModalImage();
         }
 
@@ -302,34 +329,38 @@
             setTimeout(() => { modal.style.display = "none"; }, 300);
         }
 
-        // ඊළඟ ෆොටෝ එකට යාම
+        // ඇල්බමය ඇතුළේ ඊළඟ ෆොටෝ එකට යාම
         function nextImage(event) {
-            event.stopPropagation(); // බැක්ග්‍රවුන්ඩ් එක ක්ලික් වීම වැළැක්වීමට
-            currentImageIndex = (currentImageIndex + 1) % myImages.length; // අවසන් ෆොටෝ එකෙන් පසු නැවත මුලට යාමට
+            event.stopPropagation();
+            const activeAlbum = myAlbums[currentAlbumIndex];
+            currentPhotoIndex = (currentPhotoIndex + 1) % activeAlbum.albumPhotos.length; // ඒ ඇල්බමයේ ප්‍රමාණයට පමණක් සීමා වේ
             updateModalImage();
         }
 
-        // කලින් ෆොටෝ එකට යාම
+        // ඇල්බමය ඇතුළේ කලින් ෆොටෝ එකට යාම
         function prevImage(event) {
             event.stopPropagation();
-            currentImageIndex = (currentImageIndex - 1 + myImages.length) % myImages.length;
+            const activeAlbum = myAlbums[currentAlbumIndex];
+            currentPhotoIndex = (currentPhotoIndex - 1 + activeAlbum.albumPhotos.length) % activeAlbum.albumPhotos.length;
             updateModalImage();
         }
 
-        // පොප්-අප් එක ඇතුලේ පින්තූරය සහ මාතෘකාව අලුත් කිරීම
+        // පොප්-අප් එක ඇතුලේ පින්තූරය සහ මාතෘකාව (පින්තූර අංකය සමඟ) යාවත්කාලීන කිරීම
         function updateModalImage() {
             const modalImg = document.getElementById('expandedImage');
             const captionText = document.getElementById('modalImageCaption');
+            const activeAlbum = myAlbums[currentAlbumIndex];
             
-            modalImg.style.opacity = 0; // මාරු වන විට පොඩි ඇනිමේෂන් එකක් දීමට
+            modalImg.style.opacity = 0;
             setTimeout(() => {
-                modalImg.src = "images/" + myImages[currentImageIndex].file;
-                captionText.innerHTML = myImages[currentImageIndex].title;
+                modalImg.src = "images/" + activeAlbum.albumPhotos[currentPhotoIndex];
+                // උදාහරණ මාතෘකාව: "Sports Meet 2026 (Photo 1 of 4)"
+                captionText.innerHTML = `${activeAlbum.title} <span style="color: #cbd5e1; font-size: 0.9rem; font-weight: normal;"><br>Photo ${currentPhotoIndex + 1} of ${activeAlbum.albumPhotos.length}</span>`;
                 modalImg.style.opacity = 1;
             }, 100);
         }
 
-        // කීබෝඩ් එකේ වම/දකුණ ඊතල (Arrow Keys) වලින්ද ෆොටෝ මාරු කිරීමට හැකි කිරීම
+        // කීබෝඩ් එකෙන් පාලනය කිරීමට හැකි කිරීම
         document.addEventListener('keydown', function(event) {
             const modal = document.getElementById('imagePopupModal');
             if (modal.style.display === "flex") {
