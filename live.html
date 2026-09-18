@@ -219,5 +219,23 @@
         
         `;
     </script>
+    <script>
+        /* [භාවිතා කරන ආකාරය]:
+           ඔයාලා ලයිව් ස්ට්‍රීම් එකක් පටන් ගත්තම ලැබෙන ලින්ක් එකේ අග තියෙන 
+           වීඩියෝ ID එක (අකුරු සහ ඉලක්කම් 11ක්) මෙතන ඇතුලත් කරන්න.
+           
+           (ලයිව් එකක් නැති වෙලාවට ඔයාලගේ චැනල් එකේ තියෙන වෙනත් සාමාන්‍ය 
+           වීඩියෝ එකක ID එකක් වුණත් මෙතනට දාලා තියන්න පුළුවන්!)
+        */
+        const CURRENT_LIVE_ID = "vX2jDzpgq090W6m8"; // <--- මෙතනට ඔයාගේ Live Video ID එක දාන්න!
+
+        // වීඩියෝ ප්ලේයර් එක පිටුවට ඇතුලත් කිරීම
+        document.getElementById('live-player-slot').innerHTML = `
+            <iframe src="https://www.youtube.com/embed/${CURRENT_LIVE_ID}" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/lkujOppyzGY?si=H7k85pIF6Xalwy9c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/dJTFVzBVmbU?si=J7SzlTBSbxgZa_Hn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        
+        `;
+    </script>
 </body>
 </html>
